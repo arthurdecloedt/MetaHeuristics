@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface Crossover <T extends Individual> {
 
-    List<T> crossover(List<T> individuals);
+    List<T> crossover(T p1, T p2);
 
 }

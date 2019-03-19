@@ -23,4 +23,8 @@ public class ProcessingNode {
         return processingTime;
     }
 
+    @Override
+    public String toString() {
+        return String.format("<Node [%.2f, %.2f] t=%d>", getX(), getY(), getProcessingTime());
+    }
 }
