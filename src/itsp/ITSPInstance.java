@@ -40,6 +40,14 @@ public class ITSPInstance {
         return distances[i1][i2];
     }
 
+    public int getNumNodes() {
+        return numNodes;
+    }
+
+    public ArrayList<ProcessingNode> getNodes() {
+        return nodes;
+    }
+
     @Override
     public String toString() {
         return "ITSP instance:\n" + nodes.stream().map(ProcessingNode::toString).map(s->"\t"+s+"\n").collect(Collectors.joining());
@@ -83,7 +91,7 @@ public class ITSPInstance {
         return waitingTimes;
     }
 
-    private ITSPIndividual generateRandomIndividual() {
+    public ITSPIndividual generateRandomIndividual() {
         double earlyStopChance = 0.25;
         List<ProcessingNode> nodesCopy = new ArrayList<>(nodes);
         List<ITSPVisit> visits = new ArrayList<>();
@@ -106,7 +114,7 @@ public class ITSPInstance {
     }
 
     public static void main(String[] args) {
-        ITSPInstance problem = generateRandom(3, 10, 10, 5, 30);
+        ITSPInstance problem = generateRandom(20, 100, 100, 5, 50);
         System.out.println(Arrays.toString(Arrays.stream(problem.distances).map(Arrays::toString).toArray()));
         System.out.println(problem);
         List<ITSPIndividual> inds = Stream.generate(problem::generateRandomIndividual).limit(100).sorted(Comparator.comparingDouble(Individual::getFitness)).collect(Collectors.toList());

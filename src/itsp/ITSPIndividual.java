@@ -1,5 +1,6 @@
 package itsp;
 
+import com.sun.org.apache.regexp.internal.RE;
 import geneticalgo.Individual;
 
 import java.util.List;
@@ -39,5 +40,9 @@ public class ITSPIndividual extends Individual {
 
     public List<ITSPVisit> getVisits() {
         return visits;
+    }
+
+    public ITSPInstance getProblemInstance(){
+        return problemInstance;
     }
 }
