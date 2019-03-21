@@ -5,6 +5,10 @@ import java.util.List;
 
 public class MutationSplit extends ITSPMutation {
 
+    public MutationSplit(double chance) {
+        super(chance);
+    }
+
     @Override
     public ITSPIndividual mutate(ITSPIndividual individual) {
         List<ITSPVisit> visits = individual.getVisits();
@@ -33,7 +37,7 @@ public class MutationSplit extends ITSPMutation {
         int i = 0;
         do {
             ind = problem.generateRandomIndividual();
-            ind2 = new MutationSplit().mutate(ind);
+            ind2 = new MutationSplit(1).mutate(ind);
             i++;
         } while(ind.getFitness() <= ind2.getFitness());
         System.out.println(i);

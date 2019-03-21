@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GeneticAlgorithm <T extends Individual> {
 
@@ -15,6 +16,7 @@ public class GeneticAlgorithm <T extends Individual> {
     private final Crossover<T> crossover;
     private final List<Mutation<T>> mutations;
     private final Selection<T> parentSelection, survivorSelection;
+    private final Random random = new Random();
 
     public GeneticAlgorithm(Generation<T> initialGeneration, Crossover<T> crossover, List<Mutation<T>> mutations, Selection<T> parentSelection, Selection<T> survivorSelection){
         generations = new ArrayList<>();
@@ -35,13 +37,22 @@ public class GeneticAlgorithm <T extends Individual> {
 
         List<T> crossed = new ArrayList<>();
         for (int i = 0; i < parents.size()/2; i++) {
-            crossed.addAll(crossover.crossover(parents.get(i*2), parents.get(i*2+1)));
+            if(random.nextDouble() < crossover.getCrossoverChance()) {
+                crossed.addAll(crossover.crossover(parents.get(i * 2), parents.get(i * 2 + 1)));
+            } else {
+                crossed.add(parents.get(i * 2));
+                crossed.add(parents.get(i * 2 + 1));
+            }
         }
 
-        //Create one function combining all mutations and then applying it to all new offspring.
-        Function<T, T> combinedMutations =
-                mutations.stream().map(m -> ((Function<T, T>) m::mutate)).reduce(Function::andThen).get();
-        List<T> mutated = crossed.stream().map(combinedMutations).collect(Collectors.toList());
+        Stream<T> mStream = crossed.stream();
+        for(Mutation<T> mutation: mutations) {
+            if(random.nextDouble() < mutation.getMutationChance()) {
+                mStream = mStream.map(mutation::mutate);
+            }
+        }
+        List<T> mutated = mStream.collect(Collectors.toList());
+
 
         mutated.addAll(current.getIndividuals());
 

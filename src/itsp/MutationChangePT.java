@@ -4,6 +4,10 @@ import java.util.List;
 
 public class MutationChangePT extends ITSPMutation {
 
+    public MutationChangePT(double chance) {
+        super(chance);
+    }
+
     @Override
     public ITSPIndividual mutate(ITSPIndividual individual) {
         List<ITSPVisit> visits = individual.getVisits();
@@ -28,7 +32,7 @@ public class MutationChangePT extends ITSPMutation {
         ITSPInstance problem = ITSPInstance.generateRandom(5, 100, 100, 5, 50);
         ITSPIndividual ind = problem.generateRandomIndividual();
         System.out.println(ind);
-        ind = new MutationChangePT().mutate(ind);
+        ind = new MutationChangePT(1).mutate(ind);
         System.out.println(ind);
     }
 

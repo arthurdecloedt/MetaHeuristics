@@ -60,7 +60,7 @@ public class ITSPInstance {
             double x = random.nextDouble()*width;
             double y = random.nextDouble()*height;
             int p = random.nextInt(maxProcessing-minProcessing)+minProcessing;
-            nodes.add(new ProcessingNode(x, y, p));
+            nodes.add(new ProcessingNode(i, x, y, p));
         }
 
         return new ITSPInstance(nodes, new EuclidianDistance(1));
@@ -105,7 +105,7 @@ public class ITSPInstance {
             ProcessingNode node = nodesCopy.get(i);
 
             int pt = node.getProcessingTime() > 1 && random.nextDouble() < earlyStopChance ? random.nextInt(node.getProcessingTime()-1)+1 : node.getProcessingTime();
-            nodesCopy.set(i, new ProcessingNode(node.getX(), node.getY(), node.getProcessingTime() - pt));
+            nodesCopy.set(i, new ProcessingNode(node.getId(), node.getX(), node.getY(), node.getProcessingTime() - pt));
 
             visits.add(new ITSPVisit(i, pt));
         }

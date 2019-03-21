@@ -13,15 +13,16 @@ public class GaITSP {
 
     public static void main(String[] args) {
         ITSPInstance problemInstance = ITSPInstance.generateRandom(20, 20, 20, 5, 50);
-        Generation<ITSPIndividual> initial = new Generation<>(Stream.generate(problemInstance::generateRandomIndividual).limit(20).collect(Collectors.toList()));
+        Generation<ITSPIndividual> initial = new Generation<>(Stream.generate(problemInstance::generateRandomIndividual).limit(100).collect(Collectors.toList()));
 
         GeneticAlgorithm<ITSPIndividual> ga = new GeneticAlgorithm<ITSPIndividual>(
                 initial,
-                (p1, p2)->Arrays.asList(p1, p2),
-                Arrays.asList(new MutationCombine(), new MutationSplit(), new MutationSwitch(), new MutationChangePT()),
-                new TournamentSelection<ITSPIndividual>(4),
+                new ITSPCrossover(0.75),
+                Arrays.asList(new MutationCombine(0.5), new MutationSplit(0.5), new MutationSwitch(0.5), new MutationChangePT(0.5)),
+                new TournamentSelection<ITSPIndividual>(5),
                 new FitnessSelection<ITSPIndividual>()
         );
+
 
         GuiITSP gui = new GuiITSP(problemInstance);
 

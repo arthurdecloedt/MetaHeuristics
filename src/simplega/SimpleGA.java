@@ -16,17 +16,32 @@ public class SimpleGA {
         }
 
         GeneticAlgorithm<SimpleIndividual> alg = new GeneticAlgorithm<SimpleIndividual>(
-                new Generation<>(initial),
-                (p1, p2) -> {
-                    double v1 = p1.getValue();
-                    double v2 = p2.getValue();
-                    return Arrays.asList(new SimpleIndividual(0.3*v1+0.7*v2), new SimpleIndividual(0.7*v1+0.3*v2));
+                new Generation<SimpleIndividual>(initial),
+                new Crossover<SimpleIndividual>() {
+                    public List<SimpleIndividual> crossover(SimpleIndividual p1, SimpleIndividual p2) {
+                        double v1 = p1.getValue();
+                        double v2 = p2.getValue();
+                        return (List<SimpleIndividual>) Arrays.asList(new SimpleIndividual(0.3*v1+0.7*v2), new SimpleIndividual(0.7*v1+0.3*v2));
+                    }
+                    public double getCrossoverChance() {
+                        return 0.75;
+                    }
                 },
                 Collections.singletonList(
-                        (SimpleIndividual individual) -> new SimpleIndividual(individual.getValue()+random.nextGaussian())
+                        new Mutation<SimpleIndividual>() {
+                            @Override
+                            public SimpleIndividual mutate(SimpleIndividual individual) {
+                                return new SimpleIndividual(individual.getValue() + random.nextGaussian());
+                            }
+
+                            @Override
+                            public double getMutationChance() {
+                                return 0.25;
+                            }
+                        }
                 ),
-                new TournamentSelection<>(4),
-                new FitnessSelection<>()
+                new TournamentSelection<SimpleIndividual>(4),
+                new FitnessSelection<SimpleIndividual>()
         );
 
         while(true){

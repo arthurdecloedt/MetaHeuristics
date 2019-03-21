@@ -11,6 +11,12 @@ import java.util.stream.IntStream;
 
 public abstract class ITSPMutation implements Mutation<ITSPIndividual> {
 
+    private final double chance;
+    protected Random random = new Random();
+
+    public ITSPMutation(double chance) {
+        this.chance = chance;
+    }
     /**
      * Helper method for mutation
      *
@@ -62,6 +68,8 @@ public abstract class ITSPMutation implements Mutation<ITSPIndividual> {
         return newVisits;
     }
 
-    protected Random random = new Random();
-
+    @Override
+    public double getMutationChance() {
+        return chance;
+    }
 }

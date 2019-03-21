@@ -6,4 +6,6 @@ public interface Crossover <T extends Individual> {
 
     List<T> crossover(T p1, T p2);
 
+    double getCrossoverChance();
+
 }
