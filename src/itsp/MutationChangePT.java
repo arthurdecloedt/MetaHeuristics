@@ -28,6 +28,7 @@ public class MutationChangePT extends ITSPMutation {
         return new ITSPIndividual(individual.getProblemInstance(), newVisits);
     }
 
+/*
     public static void main(String[] args) {
         ITSPInstance problem = ITSPInstance.generateRandom(5, 100, 100, 5, 50);
         ITSPIndividual ind = problem.generateRandomIndividual();
@@ -36,4 +37,5 @@ public class MutationChangePT extends ITSPMutation {
         System.out.println(ind);
     }
 
+*/
 }

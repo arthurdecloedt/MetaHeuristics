@@ -12,7 +12,8 @@ import java.util.stream.Stream;
 public class GaITSP {
 
     public static void main(String[] args) {
-        ITSPInstance problemInstance = ITSPInstance.generateRandom(20, 20, 20, 5, 50);
+        ITSPFactory factory=new ITSPFactory();
+        ITSPInstance problemInstance = factory.instancesNormal(100,new EuclidianDistance(10),50,50,6);
         Generation<ITSPIndividual> initial = new Generation<>(Stream.generate(problemInstance::generateRandomIndividual).limit(100).collect(Collectors.toList()));
 
         GeneticAlgorithm<ITSPIndividual> ga = new GeneticAlgorithm<ITSPIndividual>(

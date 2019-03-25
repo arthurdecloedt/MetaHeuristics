@@ -31,6 +31,7 @@ public class MutationSplit extends ITSPMutation {
         return new ITSPIndividual(individual.getProblemInstance(), newVisits);
     }
 
+/*
     public static void main(String[] args) {
         ITSPInstance problem = ITSPInstance.generateRandom(5, 100, 100, 5, 50);
         ITSPIndividual ind, ind2;
@@ -44,5 +45,6 @@ public class MutationSplit extends ITSPMutation {
         System.out.println(ind);
         System.out.println(ind2);
     }
+*/
 
 }

@@ -24,13 +24,13 @@ public class MutationCombine extends ITSPMutation {
 
         return new ITSPIndividual(individual.getProblemInstance(), newVisits);
     }
-
+/*
     public static void main(String[] args) {
         ITSPInstance problem = ITSPInstance.generateRandom(5, 100, 100, 5, 50);
         ITSPIndividual ind = problem.generateRandomIndividual();
         System.out.println(ind);
         ind = new MutationCombine(1).mutate(ind);
         System.out.println(ind);
-    }
+    }*/
 
 }
