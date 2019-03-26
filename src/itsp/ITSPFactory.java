@@ -9,17 +9,13 @@ public class ITSPFactory {
 
   Random random = new Random();
 
-  public void setTimeMean(double b) {
-    this.lambda = b / 1;
-  }
 
-  private double lambda;
+
+  private int bound=50;
 
   public void setBound(int bound) {
     this.bound = bound;
   }
-
-  int bound = 1000;
 
   public void setXval(int xval) {
     this.xval = xval;
@@ -38,7 +34,7 @@ public class ITSPFactory {
     for (int i = 0; i < nodenr; i++) {
       double x = random.nextDouble() * xval;
       double y = random.nextDouble() * yval;
-      int p = (int) (Math.log(1 - random.nextDouble()) / (-lambda));
+      int p = random.nextInt(bound);
       nodes.add(new ProcessingNode(i, x, y, p));
     }
     int[][] distances = getDistances(nodenr, distanceMetric, nodes);
@@ -59,7 +55,7 @@ public class ITSPFactory {
       do {
         y = random.nextDouble() * sdev + meany;
       } while (y <= 0 || y >= xval);
-      int p = (int) (Math.log(1 - random.nextDouble()) / (-lambda));
+      int p = random.nextInt(bound);
       nodes.add(new ProcessingNode(i, x, y, p));
     }
     int[][] distances = getDistances(nodenr, distanceMetric, nodes);
