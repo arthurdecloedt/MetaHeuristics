@@ -13,6 +13,10 @@ public class ITSPFactory {
 
   private int bound=50;
 
+  public void reseed(long seed){
+      random=new Random(seed);
+  }
+
   public void setBound(int bound) {
     this.bound = bound;
   }
