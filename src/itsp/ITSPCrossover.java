@@ -127,7 +127,6 @@ public class ITSPCrossover implements Crossover<ITSPIndividual> {
         this.chance = this.chance*(1-this.decay);
     }
 
-    public static void main(String[] args) {
    /* public static void main(String[] args) {
         ITSPInstance problem = ITSPInstance.generateRandom(7, 100, 100, 5, 50);
 
