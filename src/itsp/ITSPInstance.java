@@ -14,22 +14,10 @@ public class ITSPInstance {
     private final int[][] distances;
     private static final Random random = new Random();
 
-    private ITSPInstance(List<ProcessingNode> nodes, DistanceMetric distanceMetric){
+    public ITSPInstance(List<ProcessingNode> nodes, int[][] distances){
         this.nodes = new ArrayList<>(nodes);
         this.numNodes = nodes.size();
-
-        distances = new int[numNodes][numNodes];
-
-        for (int i = 0; i < numNodes; i++) {
-            for (int j = 0; j < numNodes; j++) {
-                if(i == j)
-                    distances[i][j] = 0;
-                else if(i > j)
-                    distances[i][j] = distances[j][i];
-                else
-                    distances[i][j] = distanceMetric.distanceBetween(nodes.get(i), nodes.get(j));
-            }
-        }
+        this.distances = distances;
     }
 
     public ProcessingNode getNode(int index) {
@@ -53,18 +41,6 @@ public class ITSPInstance {
         return "ITSP instance:\n" + nodes.stream().map(ProcessingNode::toString).map(s->"\t"+s+"\n").collect(Collectors.joining());
     }
 
-    public static ITSPInstance generateRandom(int numNodes, double width, double height, int minProcessing, int maxProcessing){
-        List<ProcessingNode> nodes = new ArrayList<>();
-
-        for (int i = 0; i < numNodes; i++) {
-            double x = random.nextDouble()*width;
-            double y = random.nextDouble()*height;
-            int p = random.nextInt(maxProcessing-minProcessing)+minProcessing;
-            nodes.add(new ProcessingNode(i, x, y, p));
-        }
-
-        return new ITSPInstance(nodes, new EuclidianDistance(1));
-    }
 
     List<Integer> calculateWaitingTimes(ITSPIndividual individual) {
         List<ITSPVisit> visits = individual.getVisits();
@@ -112,7 +88,7 @@ public class ITSPInstance {
 
         return new ITSPIndividual(this, visits);
     }
-
+/*
     public static void main(String[] args) {
         ITSPInstance problem = generateRandom(20, 100, 100, 5, 50);
         System.out.println(Arrays.toString(Arrays.stream(problem.distances).map(Arrays::toString).toArray()));
@@ -121,6 +97,6 @@ public class ITSPInstance {
         System.out.println(inds.get(0));
         System.out.println(inds.get(inds.size()-1));
         System.out.println(inds.stream().sorted(Comparator.comparingInt(i->i.getVisits().size())).findFirst().get());
-    }
+    }*/
 
 }

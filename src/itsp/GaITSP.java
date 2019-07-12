@@ -12,34 +12,42 @@ import java.util.stream.Stream;
 public class GaITSP {
 
     public static void main(String[] args) {
+        Random rnd=new Random();
+        long seed = rnd.nextLong();
+        ITSPFactory factory=new ITSPFactory();
+        factory.setBound(50);
+        for (int j = 1; j<5; j++) {
+            double itspcrossover=j*0.05;
+            factory.reseed(seed);
+            ITSPInstance problemInstance = factory.instanceUniform(100,new EuclidianDistance(100));
+            Generation<ITSPIndividual> initial = new Generation<>(Stream.generate(problemInstance::generateRandomIndividual).limit(100).collect(Collectors.toList()));
 
-        ITSPInstance problemInstance = ITSPInstance.generateRandom(20, 20, 20, 5, 50);
-        Generation<ITSPIndividual> initial = new Generation<>(Stream.generate(problemInstance::generateRandomIndividual).limit(100).collect(Collectors.toList()));
-        double decay=0.0001;
-        GeneticAlgorithm<ITSPIndividual> ga = new GeneticAlgorithm<ITSPIndividual>(
-                initial,
-                new ITSPCrossover(0.75,decay),
-                Arrays.asList(new MutationCombine(0.75,decay), new MutationSplit(0.75,decay), new MutationSwitch(0.55,decay), new MutationChangePT(0.75,decay)),
-                new TournamentSelection<ITSPIndividual>(5),
-                new FitnessSelection<ITSPIndividual>(),
-                true
+            GeneticAlgorithm<ITSPIndividual> ga = new GeneticAlgorithm<ITSPIndividual>(
+                    initial,
+                    new ITSPCrossover(.15),
+                    Arrays.asList(new MutationCombine(.15), new MutationSplit(.15), new MutationSwitch(.15), new MutationChangePT(.15)),
+                    new TournamentSelection<>(j),
+                    new FitnessSelection<>()
+            );
 
-        );
+            //GuiITSP gui = new GuiITSP(problemInstance);
 
-        //GuiITSP gui = new GuiITSP(problemInstance);
+            //System.out.println(problemInstance.getNodes().stream().mapToInt(ProcessingNode::getProcessingTime).sum());
+            //System.out.println("Nodes:"+ nodenr +"Uniform ");
+            int ln = 500;
+            Double[] prog = new Double[ln];
+            for (int i = 0; i < ln ; i++) {
 
-        System.out.println(problemInstance.getNodes().stream().mapToInt(ProcessingNode::getProcessingTime).sum());
-        while(true){
-            System.out.println(ga.getGeneration().getIndividuals().stream().sorted(Comparator.comparingDouble(ITSPIndividual::calculateFitness)).findFirst().get());
-            /* System.out.println(ga.getGeneration().getIndividuals().stream()
-             .mapToDouble(ITSPIndividual::calculateFitness).sorted()
-             .mapToObj(Objects::toString).collect(Collectors.joining(", "))); */
-            //gui.showGeneration(ga.getGeneration());
-            //(new Scanner(System.in)).nextLine();
-            System.out.println(ga.getMeanVar());
-            System.out.println(ga.meanFitness());
-            ga.nextGeneration();
+    //            System.out.println(ga.getGeneration().getIndividuals().stream().sorted(Comparator.comparingDouble(ITSPIndividual::calculateFitness)).findFirst().get());
+                if (i%10==0) {
 
+                    //gui.showGeneration(ga.getGeneration());
+                    //(new Scanner(System.in)).nextLine();
+                }
+                prog[i]=ga.getGeneration().getIndividuals().stream().mapToDouble(ITSPIndividual::calculateFitness).summaryStatistics().getAverage();
+                ga.nextGeneration();
+            }
+            System.out.println(Arrays.stream(prog).map(Object::toString).collect(Collectors.joining(",")));
         }
     }
 

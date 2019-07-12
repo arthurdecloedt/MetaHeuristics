@@ -9,6 +9,6 @@ public interface DistanceMetric {
      * @param n2
      * @return
      */
-    public int distanceBetween(ProcessingNode n1, ProcessingNode n2);
+    int distanceBetween(ProcessingNode n1, ProcessingNode n2);
 
 }

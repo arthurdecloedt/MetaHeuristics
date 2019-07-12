@@ -128,6 +128,7 @@ public class ITSPCrossover implements Crossover<ITSPIndividual> {
     }
 
     public static void main(String[] args) {
+   /* public static void main(String[] args) {
         ITSPInstance problem = ITSPInstance.generateRandom(7, 100, 100, 5, 50);
 
         ITSPIndividual ind1 = problem.generateRandomIndividual();
@@ -142,5 +143,5 @@ public class ITSPCrossover implements Crossover<ITSPIndividual> {
         gui.showIndividual(ind2);
         gui.showIndividual(inds.get(0));
     }
-
+*/
 }

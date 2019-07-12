@@ -1,15 +1,22 @@
 package itsp;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 public class EuclidianDistance implements DistanceMetric {
 
     private final double speed;
+
+    public double getSpeed() {
+        return speed;
+    }
 
     /**
      * Calculate using euclidean distance provided distance per timestep.
      *
      * @param speed
      */
-    public EuclidianDistance(double speed) {
+     public EuclidianDistance(double speed) {
+        if(speed<=0) throw new IllegalArgumentException("speed should be positive");
         this.speed = speed;
     }
 

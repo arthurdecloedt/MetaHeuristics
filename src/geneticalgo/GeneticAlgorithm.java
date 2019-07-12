@@ -55,10 +55,13 @@ public class GeneticAlgorithm <T extends Individual> {
 
         Stream<T> mStream = crossed.stream();
         for(Mutation<T> mutation: mutations) {
-            if(random.nextDouble() < mutation.getMutationChance()) {
-                mStream = mStream.map(mutation::mutate);
-            }
+            mStream= mStream.map(ind -> {
+                if (random.nextDouble()<mutation.getMutationChance()) return mutation.mutate(ind);
+                else return ind;
+            });
+
         }
+
         List<T> mutated = mStream.collect(Collectors.toList());
 
 
