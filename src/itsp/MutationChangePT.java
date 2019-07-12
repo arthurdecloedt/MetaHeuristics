@@ -8,6 +8,8 @@ public class MutationChangePT extends ITSPMutation {
         super(chance);
     }
 
+    public MutationChangePT(double  chance, double decay){ super(chance, decay);}
+
     @Override
     public ITSPIndividual mutate(ITSPIndividual individual) {
         List<ITSPVisit> visits = individual.getVisits();

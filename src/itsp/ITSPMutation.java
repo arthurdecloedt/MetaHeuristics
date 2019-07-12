@@ -11,18 +11,35 @@ import java.util.stream.IntStream;
 
 public abstract class ITSPMutation implements Mutation<ITSPIndividual> {
 
-    private final double chance;
+    private double chance;
     protected Random random = new Random();
+    private double decay = 0;
 
-    public ITSPMutation(double chance) {
+  public ITSPMutation(double chance) {
         this.chance = chance;
     }
-    /**
+  public ITSPMutation(double chance,double decay){
+    this(chance);
+    if(decay>=1 || decay<0){
+      throw new IllegalArgumentException("Illegal decay value: " + decay);
+    }
+    this.decay= decay;
+  }
+  @Override
+  public void decayParameters() {
+    this.chance=this.chance*(1-decay);
+  }
+
+  /**
      * Helper method for mutation
      *
      * @param visits
      * @return
      */
+
+
+
+
     protected int[] selectTwoAtSameNode(List<ITSPVisit> visits){
         Map<Integer, List<ITSPVisit>> perNode = visits.stream().collect(Collectors.groupingBy(ITSPVisit::getNodeId));
 

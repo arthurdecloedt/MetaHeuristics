@@ -6,4 +6,6 @@ public interface Mutation <T extends Individual> {
 
     double getMutationChance();
 
+    void decayParameters();
+
 }

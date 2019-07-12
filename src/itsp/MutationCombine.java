@@ -7,6 +7,7 @@ public class MutationCombine extends ITSPMutation {
     public MutationCombine(double chance) {
         super(chance);
     }
+    public MutationCombine(double  chance, double decay){ super (chance, decay);}
 
     @Override
     public ITSPIndividual mutate(ITSPIndividual individual) {

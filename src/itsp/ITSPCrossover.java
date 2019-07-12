@@ -9,12 +9,20 @@ import java.util.stream.IntStream;
 public class ITSPCrossover implements Crossover<ITSPIndividual> {
 
     private final Random random = new Random();
-    private final double chance;
+    private double chance;
+    private double decay=0;
 
     public ITSPCrossover(double chance) {
         this.chance = chance;
     }
 
+    public ITSPCrossover(double chance,double decay){
+        this(chance);
+        if(decay>=1 || decay<0){
+            throw new IllegalArgumentException("Illegal decay value: " + decay);
+        }
+        this.decay=decay;
+    }
     @Override
     public List<ITSPIndividual> crossover(ITSPIndividual p1, ITSPIndividual p2) {
         List<ITSPVisit> visits1 = p1.getVisits();
@@ -112,6 +120,11 @@ public class ITSPCrossover implements Crossover<ITSPIndividual> {
         public String toString() {
             return visit+", "+prev+", "+next;
         }
+    }
+
+    @Override
+    public void decayParameters() {
+        this.chance = this.chance*(1-this.decay);
     }
 
     public static void main(String[] args) {

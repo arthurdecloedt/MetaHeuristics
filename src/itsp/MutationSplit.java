@@ -9,6 +9,7 @@ public class MutationSplit extends ITSPMutation {
         super(chance);
     }
 
+    public MutationSplit(double  chance, double decay){ super(chance, decay);}
     @Override
     public ITSPIndividual mutate(ITSPIndividual individual) {
         List<ITSPVisit> visits = individual.getVisits();

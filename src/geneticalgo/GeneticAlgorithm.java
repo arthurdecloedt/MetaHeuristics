@@ -1,15 +1,15 @@
 package geneticalgo;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GeneticAlgorithm <T extends Individual> {
 
+    private boolean decay = false;
     private List<Generation<T>> generations;
     private int currentGeneration;
     private final int generationSize;
@@ -17,17 +17,25 @@ public class GeneticAlgorithm <T extends Individual> {
     private final List<Mutation<T>> mutations;
     private final Selection<T> parentSelection, survivorSelection;
     private final Random random = new Random();
+    private Predicate<Generation<T>> constraint;
 
     public GeneticAlgorithm(Generation<T> initialGeneration, Crossover<T> crossover, List<Mutation<T>> mutations, Selection<T> parentSelection, Selection<T> survivorSelection){
         generations = new ArrayList<>();
         generations.add(initialGeneration);
         currentGeneration = 0;
         generationSize = initialGeneration.getSize();
-
         this.crossover = crossover;
         this.mutations = mutations;
         this.parentSelection = parentSelection;
         this.survivorSelection = survivorSelection;
+        this.constraint= tGeneration -> false;
+    }
+    public GeneticAlgorithm(Generation<T> initialGeneration, Crossover<T> crossover, List<Mutation<T>> mutations, Selection<T> parentSelection, Selection<T> survivorSelection,boolean decay) {
+        this(initialGeneration, crossover, mutations, parentSelection, survivorSelection);
+        this.decay = decay;
+    }
+    public void addConstraint(Predicate<Generation<T>> constraint){this.constraint=constraint;
+
     }
 
     public void nextGeneration() {
@@ -60,6 +68,27 @@ public class GeneticAlgorithm <T extends Individual> {
 
         currentGeneration++;
         generations.add(new Generation<T>(survivors));
+        if (decay){
+            this.crossover.decayParameters();
+            this.mutations.forEach(Mutation::decayParameters);
+            System.out.println("Mutation chance" + this.mutations.get(0).getMutationChance());
+        }
+    }
+    public void untilComplete(){
+        int n=0;
+        while(!constraint.test(getGeneration())){
+            nextGeneration();
+            if (n++ == 500){
+                break;
+            }
+
+        }
+    }
+    public double meanFitness(){
+        return getGeneration().getMean();
+    }
+    public double getMeanVar(){
+        return getGeneration().getMeanVar();
     }
 
     public Generation<T> getGeneration(int i) {

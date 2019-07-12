@@ -5,14 +5,35 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static java.lang.Math.pow;
+
 public class Generation <T extends Individual> {
 
     private final List<T> individuals;
     private final int size;
+    private boolean meanc=false;
+    private double mean=0;
+    private double meanVar =0;
 
     public Generation(List<T> individuals){
         this.individuals = individuals;
         this.size = individuals.size();
+    }
+    double getMean(){
+        if(meanc) return mean;
+        List<Double> flist = this.getIndividuals().stream().map(Individual::getFitness).collect(Collectors.toList());
+        this.mean = (flist.stream().reduce(0.0,Double::sum))/flist.size();
+        this.meanVar = (flist.stream().map(x->pow((mean-x),2)).reduce(0.0,Double::sum)) / flist.size();
+        return mean;
+
+    }
+
+    double getMeanVar(){
+        if(meanc) return meanVar;
+        List<Double> flist = this.getIndividuals().stream().map(Individual::getFitness).collect(Collectors.toList());
+        this.mean = (flist.stream().reduce(0.0,Double::sum))/flist.size();
+        meanVar = (flist.stream().map(x->pow((mean-x),2)).reduce(0.0,Double::sum)) / flist.size();
+        return meanVar;
     }
 
     public List<T> getIndividuals() {

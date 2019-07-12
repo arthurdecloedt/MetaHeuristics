@@ -49,7 +49,7 @@ public class ITSPIndividual extends Individual {
 
     @Override
     public String toString() {
-        return "ITSPIndividual f="+getFitness()+":\n"+visits.stream().map(v->"\t"+v+"\n").collect(Collectors.joining());
+        return "ITSPIndividual f="+getFitness(); //+":\n"+visits.stream().map(v->"\t"+v+"\n").collect(Collectors.joining());
     }
 
     public List<Integer> getWaitingTimes() {

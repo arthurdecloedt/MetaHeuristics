@@ -8,7 +8,7 @@ public class MutationSwitch extends ITSPMutation {
     public MutationSwitch(double chance) {
         super(chance);
     }
-
+    public MutationSwitch(double  chance, double decay){ super(chance, decay);}
     @Override
     public ITSPIndividual mutate(ITSPIndividual individual) {
         List<ITSPVisit> visits = individual.getVisits();

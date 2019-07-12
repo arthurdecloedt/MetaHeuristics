@@ -18,7 +18,12 @@ public class SimpleGA {
         GeneticAlgorithm<SimpleIndividual> alg = new GeneticAlgorithm<SimpleIndividual>(
                 new Generation<SimpleIndividual>(initial),
                 new Crossover<SimpleIndividual>() {
-                    public List<SimpleIndividual> crossover(SimpleIndividual p1, SimpleIndividual p2) {
+                  @Override
+                  public void decayParameters() {
+
+                  }
+
+                  public List<SimpleIndividual> crossover(SimpleIndividual p1, SimpleIndividual p2) {
                         double v1 = p1.getValue();
                         double v2 = p2.getValue();
                         return (List<SimpleIndividual>) Arrays.asList(new SimpleIndividual(0.3*v1+0.7*v2), new SimpleIndividual(0.7*v1+0.3*v2));
@@ -37,6 +42,11 @@ public class SimpleGA {
                             @Override
                             public double getMutationChance() {
                                 return 0.25;
+                            }
+
+                            @Override
+                            public void decayParameters() {
+
                             }
                         }
                 ),

@@ -8,4 +8,5 @@ public interface Crossover <T extends Individual> {
 
     double getCrossoverChance();
 
+  void decayParameters();
 }
