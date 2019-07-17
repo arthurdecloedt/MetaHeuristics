@@ -34,9 +34,7 @@ public class GeneticAlgorithm <T extends Individual> {
         this(initialGeneration, crossover, mutations, parentSelection, survivorSelection);
         this.decay = decay;
     }
-    public void addConstraint(Predicate<Generation<T>> constraint){this.constraint=constraint;
-
-    }
+    public void addConstraint(Predicate<Generation<T>> constraint){this.constraint=constraint;}
 
     public void nextGeneration() {
         Generation<T> current = getGeneration();
@@ -71,6 +69,7 @@ public class GeneticAlgorithm <T extends Individual> {
 
         currentGeneration++;
         generations.add(new Generation<T>(survivors));
+        getGeneration().setGeneration(currentGeneration);
         if (decay){
             this.crossover.decayParameters();
             this.mutations.forEach(Mutation::decayParameters);

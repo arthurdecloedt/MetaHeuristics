@@ -15,11 +15,20 @@ public class Generation <T extends Individual> {
     private double mean=0;
     private double meanVar =0;
 
+    public int getGeneration() {
+        return generation;
+    }
+
+    public void setGeneration(int generation) {
+        this.generation = generation;
+    }
+
+    private int generation;
     public Generation(List<T> individuals){
         this.individuals = individuals;
         this.size = individuals.size();
     }
-    double getMean(){
+    public double getMean(){
         if(meanc) return mean;
         List<Double> flist = this.getIndividuals().stream().map(Individual::getFitness).collect(Collectors.toList());
         this.mean = (flist.stream().reduce(0.0,Double::sum))/flist.size();
@@ -28,7 +37,7 @@ public class Generation <T extends Individual> {
 
     }
 
-    double getMeanVar(){
+    public double getMeanVar(){
         if(meanc) return meanVar;
         List<Double> flist = this.getIndividuals().stream().map(Individual::getFitness).collect(Collectors.toList());
         this.mean = (flist.stream().reduce(0.0,Double::sum))/flist.size();
