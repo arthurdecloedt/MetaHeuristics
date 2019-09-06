@@ -12,14 +12,15 @@ public class MutationCombine extends ITSPMutation {
     @Override
     public ITSPIndividual mutate(ITSPIndividual individual) {
         List<ITSPVisit> visits = individual.getVisits();
-
+        double tpt = Double.MAX_VALUE;
+        // TODO: 2019-08-22  fix deez shit clean -> niet nodig
         int[] inds = selectTwoAtSameNode(visits);
         if(inds == null || inds.length != 2)
             return individual;
         int i1 = Math.min(inds[0], inds[1]);
         int i2 = Math.max(inds[0], inds[1]);
 
-        ITSPVisit combined = new ITSPVisit(visits.get(i1).getNodeId(), visits.get(i1).getTime()+visits.get(i2).getTime());
+        ITSPVisit combined = new ITSPVisit(visits.get(inds[0]).getNodeId(), visits.get(i1).getTime()+visits.get(i2).getTime());
 
         List<ITSPVisit> newVisits = replaceAt(visits, i1, i2, combined, null);
 

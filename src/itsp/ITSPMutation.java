@@ -37,9 +37,6 @@ public abstract class ITSPMutation implements Mutation<ITSPIndividual> {
      * @return
      */
 
-
-
-
     protected int[] selectTwoAtSameNode(List<ITSPVisit> visits){
         Map<Integer, List<ITSPVisit>> perNode = visits.stream().collect(Collectors.groupingBy(ITSPVisit::getNodeId));
 

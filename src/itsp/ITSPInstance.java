@@ -1,6 +1,7 @@
 package itsp;
 
 import geneticalgo.Individual;
+import java.util.SplittableRandom;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,8 +13,7 @@ public class ITSPInstance {
     private final ArrayList<ProcessingNode> nodes;
     private final int numNodes;
     private final int[][] distances;
-    private static final Random random = new Random();
-
+    private static final SplittableRandom random = new SplittableRandom();
     public ITSPInstance(List<ProcessingNode> nodes, int[][] distances){
         this.nodes = new ArrayList<>(nodes);
         this.numNodes = nodes.size();
@@ -68,6 +68,7 @@ public class ITSPInstance {
     }
 
     public ITSPIndividual generateRandomIndividual() {
+
         double earlyStopChance = 0.25;
         List<ProcessingNode> nodesCopy = new ArrayList<>(nodes);
         List<ITSPVisit> visits = new ArrayList<>();

@@ -26,7 +26,7 @@ public class SimpleGA {
                   public List<SimpleIndividual> crossover(SimpleIndividual p1, SimpleIndividual p2) {
                         double v1 = p1.getValue();
                         double v2 = p2.getValue();
-                        return (List<SimpleIndividual>) Arrays.asList(new SimpleIndividual(0.3*v1+0.7*v2), new SimpleIndividual(0.7*v1+0.3*v2));
+                        return Arrays.asList(new SimpleIndividual(0.3*v1+0.7*v2), new SimpleIndividual(0.7*v1+0.3*v2));
                     }
                     public double getCrossoverChance() {
                         return 0.75;
